@@ -1,141 +1,36 @@
 <!doctype html>
 <html lang="ml">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#176b4d">
-<title>വായനാമിത്രം | Vaayana Mithram</title>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>വായനാമിത്രം</title>
 <style>
-:root{--green:#176b4d;--mint:#e7f5ee;--ink:#20312b;--muted:#61736b;--paper:#fffdf7;--line:#d8e5dd}
-*{box-sizing:border-box}
-body{margin:0;background:linear-gradient(180deg,#eef8f2,#f8fbf8);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans Malayalam","Noto Sans",sans-serif}
-header{background:var(--green);color:white;padding:22px 16px;text-align:center}
-header h1{margin:0;font-size:clamp(1.7rem,5vw,2.4rem)}
-header p{margin:7px 0 0}
-main{max-width:900px;margin:0 auto;padding:18px}
-.panel{background:white;border:1px solid var(--line);border-radius:18px;padding:16px;margin:14px 0;box-shadow:0 4px 16px #17452d0c}
-.controls{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
-select,button,textarea,input{font:inherit}
-select,button{border-radius:12px;padding:10px 14px;border:1px solid #bfd4c7;background:white;color:var(--ink)}
-button{cursor:pointer}
-button.primary{background:var(--green);color:white;border-color:var(--green)}
-button:focus-visible,select:focus-visible,.word:focus-visible{outline:3px solid #e6b94f;outline-offset:2px}
-.reading-card{background:var(--paper);border:2px dashed #b6d7c4;border-radius:18px;padding:clamp(18px,5vw,32px);min-height:180px}
-.reading-card h2{margin-top:0;color:var(--green);font-size:1.15rem}
-.words{font-size:clamp(1.6rem,5vw,2.35rem);line-height:2.1;display:flex;flex-wrap:wrap;gap:8px 10px}
-.word{border:0;background:#edf7f0;border-radius:10px;padding:2px 8px;color:#173f2d;font-size:inherit;line-height:1.7}
-.word.selected{background:#ffe9a8;box-shadow:0 0 0 2px #d8a52a}
-.status{color:var(--muted);font-size:.95rem;min-height:1.5em}
-.tip{background:var(--mint);border-radius:12px;padding:12px;color:#24563e}
-textarea{width:100%;min-height:90px;border:1px solid var(--line);border-radius:12px;padding:12px}
-.small{font-size:.9rem;color:var(--muted)}
-footer{text-align:center;color:var(--muted);font-size:.85rem;padding:12px 16px 30px}
-@media(max-width:540px){main{padding:10px}.panel{padding:13px}.controls>*{flex:1 1 auto}}
-</style>
-</head>
-<body>
-<header>
-  <h1>📚 വായനാമിത്രം</h1>
-  <p>കേട്ടുപഠിക്കാം · വായിച്ചുവളരാം</p>
-</header>
+:root{--g:#176b4d;--mint:#e7f5ee;--ink:#20312b;--line:#d4e4da}*{box-sizing:border-box}body{margin:0;background:#f0f8f3;color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans Malayalam",sans-serif}header{background:var(--g);color:white;text-align:center;padding:22px 12px}h1{margin:0;font-size:1.9rem}header p{margin:8px 0 0}main{max-width:850px;margin:auto;padding:12px}.panel{background:white;border:1px solid var(--line);border-radius:16px;padding:14px;margin:12px 0}.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}button,select,textarea{font:inherit;border-radius:11px;border:1px solid #b8d2c2;padding:10px;background:white;color:var(--ink)}button{cursor:pointer}button.primary{background:var(--g);color:white;border-color:var(--g)}button:disabled{opacity:.5}.words{display:flex;gap:8px;flex-wrap:wrap;font-size:clamp(1.5rem,5vw,2.2rem);line-height:1.8}.word{background:#edf7f0;border:1px solid #c8dfd0;padding:3px 10px}.word.selected{background:#ffe7a3;border-color:#c48a00}.small{font-size:.93rem;color:#596e63;line-height:1.65}#status{background:#f4f7f5;border-radius:10px;padding:12px;line-height:1.6;white-space:pre-wrap}textarea{width:100%;min-height:85px}.pill{font-size:.82rem;background:#edf7f0;border-radius:20px;padding:4px 8px}.warning{background:#fff7df;padding:10px;border-radius:10px;line-height:1.6}
+</style></head><body>
+<header><h1>📚 വായനാമിത്രം</h1><p>കേട്ടുപഠിക്കാം · വായിച്ചുവളരാം</p></header>
 <main>
-  <section class="panel">
-    <div class="controls">
-      <label for="level"><strong>വായനാ കാർഡ് തിരഞ്ഞെടുക്കുക</strong></label>
-      <select id="level" aria-label="വായനാ കാർഡ് തിരഞ്ഞെടുക്കുക">
-        <option value="0">കാർഡ് 1 — എന്റെ വീട്</option>
-        <option value="1">കാർഡ് 2 — ഒരു മരം</option>
-        <option value="2">കാർഡ് 3 — കുഞ്ഞിപ്പൂവ്</option>
-      </select>
-      <button class="primary" id="readAll">🔊 മുഴുവൻ വായിക്കുക</button>
-      <button id="stop">⏹ നിർത്തുക</button>
-    </div>
-  </section>
-  <section class="panel reading-card" aria-live="polite">
-    <h2 id="cardTitle">കാർഡ് 1 — എന്റെ വീട്</h2>
-    <div id="words" class="words"></div>
-    <p id="status" class="status">ഒരു വാക്കിൽ തൊട്ടാൽ അതിന്റെ ഉച്ചാരണം കേൾക്കാം.</p>
-    <div class="controls">
-      <button id="repeat">🔁 വാക്ക് വീണ്ടും കേൾക്കുക</button>
-      <button id="slower">🐢 പതുക്കെ കേൾക്കുക</button>
-    </div>
-  </section>
-  <section class="panel">
-    <h2>✍️ അധ്യാപകന്റെ പുതിയ വായനാ കാർഡ്</h2>
-    <p class="small">ഒരു ചെറിയ വാക്യമോ കഥയോ ഇവിടെ ചേർക്കുക. വാക്കുകൾ സ്വയം ടച്ച് ചെയ്യാവുന്ന രീതിയിൽ മാറും.</p>
-    <textarea id="customText" placeholder="ഉദാ: അമ്മ ഒരു മരം നട്ടു."></textarea>
-    <div class="controls" style="margin-top:10px">
-      <button class="primary" id="makeCard">പുതിയ കാർഡ് കാണിക്കുക</button>
-      <button id="restore">മാതൃകാ കാർഡിലേക്ക് മടങ്ങുക</button>
-    </div>
-  </section>
-  <section class="panel tip">
-    <strong>കുട്ടികൾക്കുള്ള നിർദേശം:</strong>
-    വാക്ക് ആദ്യം സ്വയം വായിച്ചുനോക്കൂ. പ്രയാസമുണ്ടെങ്കിൽ വാക്കിൽ തൊട്ട് കേൾക്കൂ. പിന്നെ വീണ്ടും വായിക്കൂ. ⭐
-  </section>
-  <section class="panel">
-    <h2>ശബ്ദം കേൾക്കുന്നില്ലേ?</h2>
-    <p>ഈ മാതൃക നിങ്ങളുടെ ഉപകരണത്തിലെ മലയാളം ശബ്ദസൗകര്യം ഉപയോഗിക്കുന്നു. ശബ്ദം ലഭിക്കുമോ എന്ന് ആദ്യം പരീക്ഷിക്കുക. ചില iPad/ബ്രൗസറുകളിൽ മലയാളം ശബ്ദം ലഭ്യമല്ലാതിരിക്കാം; അപ്പോൾ അധ്യാപകൻ റെക്കോർഡ് ചെയ്ത ഓഡിയോ ചേർക്കുന്ന പതിപ്പ് ഒരുക്കാം.</p>
-    <button id="test">🔈 “ഇത്” എന്ന് കേൾക്കാൻ ശ്രമിക്കുക</button>
-    <p class="small">ഈ ആദ്യ മാതൃകയ്ക്ക് ഇന്റർനെറ്റ് നിർബന്ധമല്ലാത്ത സാഹചര്യം ഉണ്ടാകാം, പക്ഷേ ലഭ്യമായ ശബ്ദം ഉപകരണത്തെ ആശ്രയിച്ചിരിക്കും. പൂർണ ഓഫ്‌ലൈൻ ഉറപ്പിനായി റെക്കോർഡ് ചെയ്ത ഓഡിയോ ഫയലുകൾ ഉൾപ്പെടുത്തണം.</p>
-  </section>
+<section class="panel"><div class="row"><label for="card"><b>വായനാ കാർഡ്</b></label><select id="card"><option value="0">കാർഡ് 1 — എന്റെ വീട്</option><option value="1">കാർഡ് 2 — ഒരു മരം</option><option value="2">കാർഡ് 3 — കുഞ്ഞിപ്പൂവ്</option></select><button id="playAll" class="primary">🔊 റെക്കോർഡ് ചെയ്ത വാക്കുകൾ കേൾക്കുക</button><button id="stopAll">⏹ നിർത്തുക</button></div><p class="small">ഓരോ വാക്കിലും തൊട്ടാൽ ആ വാക്കിന്റെ റെക്കോർഡ് ചെയ്ത ശബ്ദം പ്ലേ ചെയ്യും.</p></section>
+<section class="panel"><h2 id="title">കാർഡ് 1 — എന്റെ വീട്</h2><div id="words" class="words"></div><p id="status" role="status">ഒരു വാക്കിൽ തൊടുക. ആദ്യം അധ്യാപകൻ ആ വാക്കിന്റെ ശബ്ദം റെക്കോർഡ് ചെയ്യണം.</p><div class="row"><button id="record" class="primary">🎙️ തിരഞ്ഞെടുത്ത വാക്ക് റെക്കോർഡ് ചെയ്യുക</button><button id="stopRecord" disabled>⏹ റെക്കോർഡിങ് നിർത്തി സൂക്ഷിക്കുക</button><button id="playSelected">▶️ ശബ്ദം കേൾക്കുക</button><button id="deleteSelected">🗑️ ശബ്ദം മായ്ക്കുക</button></div><p id="selectedInfo" class="small">തിരഞ്ഞെടുത്ത വാക്ക്: ഒന്നുമില്ല</p></section>
+<section class="panel"><h2>✍️ അധ്യാപകന്റെ പുതിയ കാർഡ്</h2><textarea id="custom" placeholder="ഉദാ: അമ്മ ഒരു മരം നട്ടു."></textarea><div class="row" style="margin-top:8px"><button id="make" class="primary">പുതിയ കാർഡ് കാണിക്കുക</button><button id="restore">മാതൃകയിലേക്ക് മടങ്ങുക</button></div><p class="small">പുതിയ കാർഡിലെ ഓരോ വാക്കിനും വേർതിരിച്ച് ശബ്ദം റെക്കോർഡ് ചെയ്യാം.</p></section>
+<section class="panel"><h2>📌 എങ്ങനെ ഉപയോഗിക്കാം?</h2><ol class="small"><li>Safari-യിൽ വെബ്സൈറ്റ് തുറക്കുക.</li><li>ഒരു വാക്കിൽ തൊടുക.</li><li><b>“തിരഞ്ഞെടുത്ത വാക്ക് റെക്കോർഡ് ചെയ്യുക”</b> അമർത്തുക; മൈക്രോഫോൺ അനുമതി ചോദിച്ചാൽ Allow അമർത്തുക.</li><li>ആ വാക്ക് വ്യക്തമായി പറയുക; തുടർന്ന് <b>“റെക്കോർഡിങ് നിർത്തി സൂക്ഷിക്കുക”</b> അമർത്തുക.</li><li>ഇനി അതേ വാക്കിൽ തൊട്ടാൽ നിങ്ങളുടെ ശബ്ദം കേൾക്കാം. ഓരോ വാക്കിനും ഒരിക്കൽ ചെയ്യുക.</li></ol><div class="warning small"><b>പ്രധാന കുറിപ്പ്:</b> റെക്കോർഡുകൾ ഈ iPad-ലെ Safari-യിൽ സൂക്ഷിക്കുന്നതാണ്. ഇതേ iPad-ലും ഇതേ ബ്രൗസറിലും ഉപയോഗിക്കുക. ബ്രൗസർ ഡാറ്റ മായ്ച്ചാൽ റെക്കോർഡുകൾ നഷ്ടപ്പെടാം. GitHub-ലേക്ക് ഓഡിയോ ഫയലുകൾ അപ്‌ലോഡ് ചെയ്യേണ്ടതില്ല.</div><div class="row"><button id="countBtn">📊 എத்தனை വാക്കുകൾ റെക്കോർഡ് ചെയ്തു?</button><button id="clearAll">⚠️ എല്ലാ റെക്കോർഡുകളും മായ്ക്കുക</button></div></section>
 </main>
-<footer>വായനാമിത്രം · മലയാളം വായനാ പിന്തുണാ ഉപകരണം · പ്രാരംഭ മാതൃക</footer>
 <script>
-const cards = [
- {title:"കാർഡ് 1 — എന്റെ വീട്", text:"ഇത് എന്റെ വീടാണ്. വീട്ടിൽ അമ്മയും അച്ഛനും ഉണ്ട്."},
- {title:"കാർഡ് 2 — ഒരു മരം", text:"മുറ്റത്ത് ഒരു മരമുണ്ട്. മരത്തിൽ പക്ഷികൾ ഇരിക്കുന്നു."},
- {title:"കാർഡ് 3 — കുഞ്ഞിപ്പൂവ്", text:"തോട്ടത്തിൽ ഒരു പൂവ് വിരിഞ്ഞു. പൂവിന് നല്ല മണമുണ്ട്."}
-];
-let activeText = cards[0].text;
-let selectedWord = "";
-const wordsEl = document.getElementById("words");
-const statusEl = document.getElementById("status");
-const titleEl = document.getElementById("cardTitle");
-function speak(text, rate=0.82){
-  if(!("speechSynthesis" in window)){ statusEl.textContent="ഈ ബ്രൗസറിൽ ശബ്ദവായന പിന്തുണയില്ല. മറ്റൊരു ബ്രൗസറിൽ പരീക്ഷിക്കുക."; return; }
-  window.speechSynthesis.cancel();
-  const utterance = new SpeechSynthesisUtterance(text);
-  utterance.lang = "ml-IN";
-  utterance.rate = rate;
-  utterance.pitch = 1;
-  utterance.onstart = ()=>{statusEl.textContent="ശബ്ദം കേൾക്കൂ…";};
-  utterance.onend = ()=>{statusEl.textContent="ഇപ്പോൾ വാക്ക് വീണ്ടും സ്വയം വായിച്ചുനോക്കൂ.";};
-  utterance.onerror = ()=>{statusEl.textContent="മലയാളം ശബ്ദം ഈ ഉപകരണത്തിൽ ലഭ്യമല്ലായിരിക്കാം. റെക്കോർഡ് ചെയ്ത ഓഡിയോ ചേർക്കാം.";};
-  window.speechSynthesis.speak(utterance);
-}
-function render(title,text){
-  activeText=text; titleEl.textContent=title; wordsEl.innerHTML=""; selectedWord="";
-  const tokens=text.match(/[^\s]+/g)||[];
-  tokens.forEach(token=>{
-    const b=document.createElement("button");
-    b.className="word"; b.textContent=token; b.type="button";
-    b.setAttribute("aria-label",token+" എന്ന വാക്ക് കേൾക്കുക");
-    b.addEventListener("click",()=>{
-      document.querySelectorAll(".word").forEach(x=>x.classList.remove("selected"));
-      b.classList.add("selected"); selectedWord=token.replace(/[.,!?;:]+$/,"");
-      speak(selectedWord); 
-    });
-    wordsEl.appendChild(b);
-  });
-  statusEl.textContent="ഒരു വാക്കിൽ തൊട്ടാൽ അതിന്റെ ഉച്ചാരണം കേൾക്കാം.";
-}
-document.getElementById("level").addEventListener("change",e=>{const c=cards[Number(e.target.value)];render(c.title,c.text);});
-document.getElementById("readAll").addEventListener("click",()=>speak(activeText,0.78));
-document.getElementById("stop").addEventListener("click",()=>{if(window.speechSynthesis)window.speechSynthesis.cancel();statusEl.textContent="ശബ്ദം നിർത്തി.";});
-document.getElementById("repeat").addEventListener("click",()=>{if(selectedWord)speak(selectedWord);else statusEl.textContent="ആദ്യം ഒരു വാക്കിൽ തൊടുക.";});
-document.getElementById("slower").addEventListener("click",()=>{if(selectedWord)speak(selectedWord,0.58);else speak(activeText,0.58);});
-document.getElementById("test").addEventListener("click",()=>speak("ഇത്"));
-document.getElementById("makeCard").addEventListener("click",()=>{
- const t=document.getElementById("customText").value.trim();
- if(!t){statusEl.textContent="ആദ്യം ഒരു വാക്യം ടൈപ്പ് ചെയ്യുക.";return;}
- document.getElementById("level").value="-1"; render("അധ്യാപകന്റെ പുതിയ കാർഡ്",t);
-});
-document.getElementById("restore").addEventListener("click",()=>{
- document.getElementById("level").value="0";document.getElementById("customText").value="";
- render(cards[0].title,cards[0].text);
-});
-render(cards[0].title,cards[0].text);
-</script>
-</body>
-</html>
+const cards=[{title:'കാർഡ് 1 — എന്റെ വീട്',text:'ഇത് എന്റെ വീടാണ്. വീട്ടിൽ അമ്മയും അച്ഛനും ഉണ്ട്.'},{title:'കാർഡ് 2 — ഒരു മരം',text:'മുറ്റത്ത് ഒരു മരമുണ്ട്. മരത്തിൽ പക്ഷികൾ ഇരിക്കുന്നു.'},{title:'കാർഡ് 3 — കുഞ്ഞിപ്പൂവ്',text:'തോട്ടത്തിൽ ഒരു പൂവ് വിരിഞ്ഞു. പൂവിന് നല്ല മണമുണ്ട്.'}];
+const $=id=>document.getElementById(id);let activeText=cards[0].text,selectedWord='',recorder=null,chunks=[],currentKey='',stream=null,playQueue=[],playing=false;
+const DB_NAME='VaayanaMithramAudioDB',STORE='wordAudio';
+function openDB(){return new Promise((resolve,reject)=>{const req=indexedDB.open(DB_NAME,1);req.onupgradeneeded=()=>req.result.createObjectStore(STORE);req.onsuccess=()=>resolve(req.result);req.onerror=()=>reject(req.error)})}
+async function saveAudio(key,blob){const db=await openDB();return new Promise((resolve,reject)=>{const tx=db.transaction(STORE,'readwrite');tx.objectStore(STORE).put(blob,key);tx.oncomplete=()=>resolve();tx.onerror=()=>reject(tx.error)})}
+async function getAudio(key){const db=await openDB();return new Promise((resolve,reject)=>{const req=db.transaction(STORE,'readonly').objectStore(STORE).get(key);req.onsuccess=()=>resolve(req.result||null);req.onerror=()=>reject(req.error)})}
+async function deleteAudio(key){const db=await openDB();return new Promise((resolve,reject)=>{const tx=db.transaction(STORE,'readwrite');tx.objectStore(STORE).delete(key);tx.oncomplete=resolve;tx.onerror=()=>reject(tx.error)})}
+async function allAudioKeys(){const db=await openDB();return new Promise((resolve,reject)=>{const req=db.transaction(STORE,'readonly').objectStore(STORE).getAllKeys();req.onsuccess=()=>resolve(req.result);req.onerror=()=>reject(req.error)})}
+function keyFor(word){return word.normalize('NFC').replace(/[.,!?;:]+$/,'').trim()}
+function cleanWord(token){return token.replace(/^[“”"'‘’([{]+|[.,!?;:;”"'’)}\]]+$/g,'').trim()}
+function render(title,text){activeText=text;$('title').textContent=title;$('words').innerHTML='';selectedWord='';$('selectedInfo').textContent='തിരഞ്ഞെടുത്ത വാക്ക്: ഒന്നുമില്ല';(text.match(/[^\s]+/g)||[]).forEach(token=>{const word=cleanWord(token);const b=document.createElement('button');b.className='word';b.textContent=token;b.type='button';b.onclick=async()=>{document.querySelectorAll('.word').forEach(x=>x.classList.remove('selected'));b.classList.add('selected');selectedWord=word;$('selectedInfo').textContent='തിരഞ്ഞെടുത്ത വാക്ക്: '+word;await playWord(word)};$('words').appendChild(b)});$('status').textContent='ഒരു വാക്കിൽ തൊടുക. ശബ്ദം ഇല്ലെങ്കിൽ ആ വാക്ക് തിരഞ്ഞെടുത്ത് റെക്കോർഡ് ചെയ്യുക.'}
+async function playWord(word){if(!word)return;try{const blob=await getAudio(keyFor(word));if(!blob){$('status').textContent='“'+word+'” എന്ന വാക്കിന്റെ ശബ്ദം ഇതുവരെ റെക്കോർഡ് ചെയ്തിട്ടില്ല. റെക്കോർഡ് ബട്ടൺ അമർത്തുക.';return}const url=URL.createObjectURL(blob);const audio=new Audio(url);audio.onended=()=>URL.revokeObjectURL(url);audio.onerror=()=>{$('status').textContent='ഓഡിയോ പ്ലേ ചെയ്യാനായില്ല. വീണ്ടും റെക്കോർഡ് ചെയ്യുക.';URL.revokeObjectURL(url)};$('status').textContent='കേൾക്കുന്നു: '+word;await audio.play()}catch(e){$('status').textContent='ഓഡിയോ തുറക്കാനായില്ല: '+e.message}}
+$('card').onchange=e=>{const c=cards[+e.target.value];render(c.title,c.text)};
+$('record').onclick=async()=>{if(!selectedWord){$('status').textContent='ആദ്യം ഒരു വാക്കിൽ തൊട്ട് തിരഞ്ഞെടുക്കുക.';return}if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia||!window.MediaRecorder){$('status').textContent='ഈ ബ്രൗസറിൽ റെക്കോർഡിങ് സൗകര്യം ലഭ്യമല്ല. Safari-യിൽ https:// ലിങ്ക് തുറന്നിട്ടുണ്ടെന്ന് ഉറപ്പാക്കുക.';return}try{stream=await navigator.mediaDevices.getUserMedia({audio:true});let options={};if(MediaRecorder.isTypeSupported('audio/mp4'))options.mimeType='audio/mp4';recorder=new MediaRecorder(stream,options);chunks=[];currentKey=keyFor(selectedWord);recorder.ondataavailable=e=>{if(e.data&&e.data.size)chunks.push(e.data)};recorder.onstop=async()=>{try{const blob=new Blob(chunks,{type:recorder.mimeType||'audio/mp4'});await saveAudio(currentKey,blob);$('status').textContent='“'+selectedWord+'” എന്ന വാക്കിന്റെ ശബ്ദം ഈ iPad-ൽ സൂക്ഷിച്ചു. വാക്കിൽ തൊട്ട് കേൾക്കാം.';stream.getTracks().forEach(t=>t.stop());stream=null;$('record').disabled=false;$('stopRecord').disabled=true;await updateCount()}catch(e){$('status').textContent='ശബ്ദം സൂക്ഷിക്കാനായില്ല: '+e.message}};recorder.start();$('record').disabled=true;$('stopRecord').disabled=false;$('status').textContent='ഇപ്പോൾ “'+selectedWord+'” വ്യക്തമായി പറയുക. കഴിഞ്ഞാൽ റെക്കോർഡിങ് നിർത്തി സൂക്ഷിക്കുക അമർത്തുക.'}catch(e){$('status').textContent='മൈക്രോഫോൺ അനുമതി ലഭിച്ചില്ല. Safari ചോദിച്ചാൽ Allow അമർത്തുക. ('+e.message+')'}};
+$('stopRecord').onclick=()=>{if(recorder&&recorder.state!=='inactive')recorder.stop()};$('playSelected').onclick=()=>selectedWord?playWord(selectedWord):$('status').textContent='ആദ്യം ഒരു വാക്കിൽ തൊടുക.';$('deleteSelected').onclick=async()=>{if(!selectedWord)return $('status').textContent='ആദ്യം ഒരു വാക്കിൽ തൊടുക.';await deleteAudio(keyFor(selectedWord));$('status').textContent='“'+selectedWord+'” എന്ന വാക്കിന്റെ റെക്കോർഡ് മായ്ച്ചു.';await updateCount()};
+$('playAll').onclick=async()=>{playQueue=(activeText.match(/[^\s]+/g)||[]).map(cleanWord).filter(Boolean);playing=true;for(const word of playQueue){if(!playing)break;const blob=await getAudio(keyFor(word));if(!blob){$('status').textContent='“'+word+'” എന്ന വാക്കിന്റെ ശബ്ദം റെക്കോർഡ് ചെയ്തിട്ടില്ല. അവിടെ വായന നിർത്തി.';playing=false;return}await new Promise(resolve=>{const url=URL.createObjectURL(blob),a=new Audio(url);a.onended=()=>{URL.revokeObjectURL(url);resolve()};a.onerror=()=>{URL.revokeObjectURL(url);resolve()};$('status').textContent='വായിക്കുന്നു: '+word;a.play().catch(resolve)})}playing=false;if(playQueue.length)$('status').textContent='റെക്കോർഡ് ചെയ്ത വാക്കുകൾ കഴിഞ്ഞു.'};$('stopAll').onclick=()=>{playing=false;playQueue=[];$('status').textContent='നിർത്തി. നിലവിലെ വാക്കിന്റെ ശബ്ദം അവസാനിച്ചേക്കാം.'};
+$('make').onclick=()=>{const t=$('custom').value.trim();if(!t){$('status').textContent='ആദ്യം വാക്യം ടൈപ്പ് ചെയ്യുക.';return}render('അധ്യാപകന്റെ പുതിയ കാർഡ്',t)};$('restore').onclick=()=>{$('card').value='0';$('custom').value='';render(cards[0].title,cards[0].text)};
+async function updateCount(){try{const keys=await allAudioKeys();$('countBtn').textContent='📊 റെക്കോർഡ് ചെയ്ത വാക്കുകൾ: '+keys.length}catch(e){}}$('countBtn').onclick=async()=>{const keys=await allAudioKeys();$('status').textContent='ഈ iPad-ൽ '+keys.length+' വാക്കുകളുടെ ഓഡിയോ റെക്കോർഡ് ചെയ്തിട്ടുണ്ട്.'};$('clearAll').onclick=async()=>{if(!confirm('ഈ iPad-ൽ സൂക്ഷിച്ച എല്ലാ വാക്കുകളുടെയും ശബ്ദം മായ്ക്കണോ?'))return;const db=await openDB();await new Promise((resolve,reject)=>{const tx=db.transaction(STORE,'readwrite');tx.objectStore(STORE).clear();tx.oncomplete=resolve;tx.onerror=()=>reject(tx.error)});$('status').textContent='എല്ലാ ഓഡിയോ റെക്കോർഡുകളും മായ്ച്ചു.';await updateCount()};
+render(cards[0].title,cards[0].text);updateCount();
+</script></body></html>
