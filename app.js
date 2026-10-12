@@ -1,5 +1,5 @@
 const SUPABASE_URL = "https://xfizzpzjimkqeofrirrv.supabase.co";
-const SUPABASE_KEY = "PASTE_YOUR_SUPABASE_PUBLISHABLE_KEY_HERE";
+const SUPABASE_KEY = "sb_publishable_gSdSomR7rdwO2RClYODp8Q_dD23Ig61";
 const BUCKET = "Vaayana-audio";
 const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
